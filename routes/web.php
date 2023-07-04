@@ -1,5 +1,8 @@
 <?php
 
+namespace App\Http\Controllers;
+
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +17,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $posts = Post::all(); // Use the Post model to retrieve all posts
+
+    return view('posts', ['posts' => $posts]);
 });
+
+Route::get('/posts', 'App\Http\Controllers\PostController@index');
+//Route::get('/posts/{post}', 'App\Http\Controllers\PostController@show')->name('posts.show');
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('show');
